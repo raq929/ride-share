@@ -11,17 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150806195336) do
+ActiveRecord::Schema.define(version: 20151212221626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "books", force: :cascade do |t|
-    t.string   "title"
-    t.string   "isbn"
-    t.integer  "user_id"
+  create_table "locations", force: :cascade do |t|
+    t.decimal  "lat",        precision: 15, scale: 12, null: false
+    t.decimal  "lng",        precision: 15, scale: 12, null: false
+    t.string   "address",                              null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  create_table "ride_passengers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id",    null: false
+    t.integer  "ride_id",    null: false
+  end
+
+  add_index "ride_passengers", ["ride_id"], name: "index_ride_passengers_on_ride_id", using: :btree
+  add_index "ride_passengers", ["user_id"], name: "index_ride_passengers_on_user_id", using: :btree
+
+  create_table "rides", force: :cascade do |t|
+    t.integer  "owner_id",            null: false
+    t.string   "length"
+    t.integer  "spots_left",          null: false
+    t.string   "departure_date_time"
+    t.integer  "destination_id",      null: false
+    t.integer  "start_point_id",      null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -35,4 +56,6 @@ ActiveRecord::Schema.define(version: 20150806195336) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["token"], name: "index_users_on_token", unique: true, using: :btree
 
+  add_foreign_key "ride_passengers", "rides"
+  add_foreign_key "ride_passengers", "users"
 end
