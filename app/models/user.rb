@@ -2,5 +2,6 @@
 class User < ActiveRecord::Base
   include Authentication
 
-  has_many :books
+  has_many :rides
+  has_many :ride_passengers, through: :rides
 end
