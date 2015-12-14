@@ -16,7 +16,8 @@
 
 class Ride < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User'
-  has_many :passenger, through: :ride_passengers
+  has_many :ride_passengers
+  has_many :passengers, :class_name => 'User', through: :ride_passengers, source: :user
   belongs_to :destination, :class_name => 'Location', :foreign_key => 'destination_id'
   belongs_to :start_point, :class_name => 'Location', :foreign_key => 'start_point_id'
   

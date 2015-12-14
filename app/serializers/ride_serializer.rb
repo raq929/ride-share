@@ -19,4 +19,5 @@ class RideSerializer < ActiveModel::Serializer
   has_one :owner, serializer: UserSerializer
   has_one :destination, serializer: LocationSerializer
   has_one :start_point, serializer: LocationSerializer
+  has_many :passengers, class_name: 'User', serializer: UserSerializer
 end
