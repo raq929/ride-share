@@ -9,7 +9,6 @@ class RidesController < OpenReadController
   end
 
   def create
-    p "Ride params = #{ride_params}"
     begin
      Ride.transaction do
         destination = Location.find_or_create_by!(address: ride_params[:destination][:address], 
@@ -21,7 +20,6 @@ class RidesController < OpenReadController
           spots_left: ride_params[:spots_left], departure_date_time: ride_params[:departure_date_time], 
           event: ride_params[:event], destination: destination, start_point: start_point)
         @ride.save
-        p @ride
       end
     rescue ActiveRecord::RecordInvalid => invalid
       p invalid.message
@@ -68,10 +66,16 @@ class RidesController < OpenReadController
   end
 
   def destroy
-    @ride = Ride.find_by_id(params[:id])
-    @ride.destroy
 
-    render json: {message: 'Ride deleleted.'}
+    @ride = Ride.find_by_id(params[:id])
+    if current_user.id != @ride.id
+      render json: {message: "You not authorized to update this ride"}, head: :unauthorized 
+    end
+    if @ride.destroy
+     render json: {message: 'Ride deleleted.'}
+    else
+      render json: {message: 'Ride was not successfully deleted'}, status: 401
+    end
   end
 
   def ride_params
