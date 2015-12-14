@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: rides
+#
+#  id                  :integer          not null, primary key
+#  owner_id            :integer          not null
+#  length              :string
+#  event               :string
+#  spots_left          :integer          not null
+#  departure_date_time :string
+#  destination_id      :integer          not null
+#  start_point_id      :integer          not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#
+
 class RideSerializer < ActiveModel::Serializer
   attributes :id, :length, :spots_left, :departure_date_time 
   has_one :owner, serializer: UserSerializer
