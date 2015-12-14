@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   resources :users, except: [:new, :edit]
 
   resources :rides, except: [:new, :edit]
+
+  resources :ride_passengers, except: [:new, :edit, :update, :show]
 end
