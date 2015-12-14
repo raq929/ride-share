@@ -12,10 +12,14 @@ class RidesController < OpenReadController
     p "Ride params = #{ride_params}"
     begin
      Ride.transaction do
-        destination = Location.find_or_create_by!(address: ride_params[:destination][:address], lat: ride_params[:destination][:lat], lng:ride_params[:destination][:lng])
-        start_point = Location.find_or_create_by!(address: ride_params[:start_point][:address], lat: ride_params[:start_point][:lat], lng:ride_params[:start_point][:lng])
+        destination = Location.find_or_create_by!(address: ride_params[:destination][:address], 
+          lat: ride_params[:destination][:lat], lng:ride_params[:destination][:lng])
+        start_point = Location.find_or_create_by!(address: ride_params[:start_point][:address], 
+          lat: ride_params[:start_point][:lat], lng:ride_params[:start_point][:lng])
 
-        @ride = current_user.rides.new(length: ride_params[:length], spots_left: ride_params[:spots_left], departure_date_time: ride_params[:departure_date_time], event: ride_params[:event], destination: destination, start_point: start_point)
+        @ride = current_user.rides.new(length: ride_params[:length], 
+          spots_left: ride_params[:spots_left], departure_date_time: ride_params[:departure_date_time], 
+          event: ride_params[:event], destination: destination, start_point: start_point)
         @ride.save
         p @ride
       end
@@ -33,24 +37,30 @@ class RidesController < OpenReadController
 
   def update
     ride = Ride.find_by_id(params[:id])
-    if ride.owner == current_user[:id]
+    
+    if ride.owner.id == current_user[:id]
       begin
         Ride.transaction do
           if ride_params[:destination]
-            destination = location.find_or_create_by!(address: ride_params[:address], lat: ride_params[:destination][:lat], lng:ride_params[:destination][:lng])
+            p ride_params[:address]
+            destination = Location.find_or_create_by!(address: ride_params[:destination][:address], 
+              lat: ride_params[:destination][:lat], lng:ride_params[:destination][:lng])
             ride.update!(destination: destination)
+          else
+            destination = ride.destination
           end
           if ride_params[:start_point]
-             start_point = location.find_or_create_by!(address: ride_params[:address], lat: ride_params[:start_point][:lat], lng:ride_params[:start_point][:lng])
-            ride.update!(start_point: start_point) 
+             start_point = Location.find_or_create_by!(address: ride_params[:start_point][:address], lat: ride_params[:start_point][:lat], lng:ride_params[:start_point][:lng])
+          else
+            start_point = ride.start_point
           end
-          ride.update(length: ride_params[:length], spots_left: ride_params[:spots_left], departure_date_time: ride_params[:departure_date_time], event: ride_params[:event])
+          ride.update!(length: ride_params[:length], spots_left: ride_params[:spots_left], departure_date_time: ride_params[:departure_date_time], event: ride_params[:event], destination: destination, start_point: start_point)
           end     
       rescue Exception => e
         puts e.message
         render text: e.message, status: 400
       else      
-        render json: @ride
+        render json: ride
       end
     else
       render json: {message: "You not authorized to update this ride"}, head: :unauthorized   
@@ -65,6 +75,6 @@ class RidesController < OpenReadController
   end
 
   def ride_params
-    params.require(:ride).permit(:length, :spots_left, :departure_date_time, {destination: [:lat,:lng, :address]}, {start_point: [:lat,:lng, :address]}, :event)
+    params.require(:ride).permit(:id, :length, :spots_left, :departure_date_time, {destination: [:lat,:lng, :address]}, {start_point: [:lat,:lng, :address]}, :event)
   end
 end

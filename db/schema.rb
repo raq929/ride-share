@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20151212221626) do
   create_table "rides", force: :cascade do |t|
     t.integer  "owner_id",            null: false
     t.string   "length"
+    t.string   "event"
     t.integer  "spots_left",          null: false
     t.string   "departure_date_time"
     t.integer  "destination_id",      null: false

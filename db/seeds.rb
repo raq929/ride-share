@@ -11,7 +11,7 @@ users = Array.new
 
 %w(rts srt rst str).each do |name|
   email = "#{name}@#{name}.com"
-  id = User.find_by!(email: email)
+  id = User.find_by(email: email)
 
   if id == nil
     id = User.create!(email: email, password: 'abc123',
@@ -27,7 +27,7 @@ lat_lngs = [[42.360082, -71.058880, "Boston"],[41.823989, -71.412834, "Providenc
 locations = Array.new
 
 lat_lngs.each do |latLng|
-   id = Location.create!(lat: latLng[0],lng: lat_lngs[1], address: lat_lngs[3])
+   id = Location.create!(lat: latLng[0],lng: latLng[1], address: latLng[2])
    locations.push(id)
 end
 
