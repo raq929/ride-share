@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151212221626) do
+ActiveRecord::Schema.define(version: 20151214033831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,13 +32,14 @@ ActiveRecord::Schema.define(version: 20151212221626) do
   end
 
   add_index "ride_passengers", ["ride_id"], name: "index_ride_passengers_on_ride_id", using: :btree
+  add_index "ride_passengers", ["user_id", "ride_id"], name: "index_ride_passengers_on_user_id_and_ride_id", unique: true, using: :btree
   add_index "ride_passengers", ["user_id"], name: "index_ride_passengers_on_user_id", using: :btree
 
   create_table "rides", force: :cascade do |t|
     t.integer  "owner_id",            null: false
     t.string   "length"
     t.string   "event"
-    t.integer  "spots_left",          null: false
+    t.integer  "spots_available",     null: false
     t.string   "departure_date_time"
     t.integer  "destination_id",      null: false
     t.integer  "start_point_id",      null: false

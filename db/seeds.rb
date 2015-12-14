@@ -31,9 +31,9 @@ lat_lngs.each do |latLng|
    locations.push(id)
 end
 
-ride1 = Ride.create!(owner: User.find_by(email: "rts@rts.com"), destination: locations[0], start_point: locations[1], departure_date_time: "Today", spots_left: 3)[:id]
+ride1 = Ride.create!(owner: User.find_by(email: "rts@rts.com"), destination: locations[0], start_point: locations[1], departure_date_time: "Today", spots_available: 3)[:id]
 
-ride2 = Ride.create!(owner: User.find_by(email: "rts@rts.com"), destination: locations[0], start_point: locations[1], departure_date_time: "Today", spots_left: 3)[:id]
+ride2 = Ride.create!(owner: User.find_by(email: "rts@rts.com"), destination: locations[0], start_point: locations[1], departure_date_time: "Today", spots_available: 3)[:id]
 
 RidePassenger.create!(ride_id: ride1, user_id: 2)
 RidePassenger.create!(ride_id: ride2, user_id: 3)

@@ -17,7 +17,7 @@ class RidesController < OpenReadController
           lat: ride_params[:start_point][:lat], lng:ride_params[:start_point][:lng])
 
         @ride = current_user.rides.new(length: ride_params[:length], 
-          spots_left: ride_params[:spots_left], departure_date_time: ride_params[:departure_date_time], 
+          spots_available: ride_params[:spots_available], departure_date_time: ride_params[:departure_date_time], 
           event: ride_params[:event], destination: destination, start_point: start_point)
         @ride.save
       end
@@ -52,7 +52,7 @@ class RidesController < OpenReadController
           else
             start_point = ride.start_point
           end
-          ride.update!(length: ride_params[:length], spots_left: ride_params[:spots_left], departure_date_time: ride_params[:departure_date_time], event: ride_params[:event], destination: destination, start_point: start_point)
+          ride.update!(length: ride_params[:length], spots_available: ride_params[:spots_available], departure_date_time: ride_params[:departure_date_time], event: ride_params[:event], destination: destination, start_point: start_point)
           end     
       rescue Exception => e
         puts e.message
@@ -79,6 +79,6 @@ class RidesController < OpenReadController
   end
 
   def ride_params
-    params.require(:ride).permit(:id, :length, :spots_left, :departure_date_time, {destination: [:lat,:lng, :address]}, {start_point: [:lat,:lng, :address]}, :event)
+    params.require(:ride).permit(:id, :length, :spots_available, :departure_date_time, {destination: [:lat,:lng, :address]}, {start_point: [:lat,:lng, :address]}, :event)
   end
 end

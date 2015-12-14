@@ -6,7 +6,7 @@
 #  owner_id            :integer          not null
 #  length              :string
 #  event               :string
-#  spots_left          :integer          not null
+#  spots_available          :integer          not null
 #  departure_date_time :string
 #  destination_id      :integer          not null
 #  start_point_id      :integer          not null
@@ -24,7 +24,7 @@ class Ride < ActiveRecord::Base
   validates :destination, presence: true
   validates :start_point, presence: true
   validates :owner, presence: true
-  validates :spots_left, presence: true
+  validates :spots_available, presence: true
   validates :departure_date_time, presence: true
 
 end
