@@ -16,9 +16,12 @@ class RidePassengersController < OpenReadController
   end
 
   def create
-    passenger = RidePassenger.create(user_id: current_user.id, ride_id: ride_passengers_params[:ride_id])
-    if passenger.save
-      render json: passenger, status: 201
+    ride = Ride.find_by_id(ride_passengers_params[:ride_id])
+    if ride.spots_available > ride.passengers.length && current_user.id != ride.owner.id
+      passenger = RidePassenger.create(user_id: current_user.id, ride_id: ride_passengers_params[:ride_id])
+      if passenger.save
+        render json: passenger, status: 201
+      end   
     else
       render json: {message: 'You were not successfully added as a passenger.'}, status: 401
     end
