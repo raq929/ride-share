@@ -68,10 +68,9 @@ class RidesController < OpenReadController
   def destroy
 
     @ride = Ride.find_by_id(params[:id])
-    if current_user.id != @ride.id
+    if current_user.id != @ride.owner.id
       render json: {message: "You not authorized to update this ride"}, head: :unauthorized 
-    end
-    if @ride.destroy
+    elsif @ride.destroy
      render json: {message: 'Ride deleleted.'}
     else
       render json: {message: 'Ride was not successfully deleted'}, status: 401
