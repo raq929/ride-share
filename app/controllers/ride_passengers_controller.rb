@@ -20,12 +20,12 @@ class RidePassengersController < OpenReadController
     if passenger.save
       render json: passenger, status: 201
     else
-      render json: {message: 'You were not successfully added as a passenger.'}
+      render json: {message: 'You were not successfully added as a passenger.'}, status: 401
     end
   end
 
   def destroy
-    ride_passenger = RidePassenger.find_by_id(params[:id])
+    ride_passenger = RidePassenger.find_by(user_id: current_user.id, ride_id: ride_passengers_params[:ride_id])
     p current_user.id
     p ride_passenger.id
     if (current_user.id == ride_passenger.user.id) && ride_passenger.destroy
