@@ -15,7 +15,7 @@
 #
 
 class RideSerializer < ActiveModel::Serializer
-  attributes :id, :length, :spots_available, :departure_date_time 
+  attributes :id, :length, :spots_available, :departure_date_time, :event 
   has_one :owner, serializer: UserSerializer
   has_one :destination, serializer: LocationSerializer
   has_one :start_point, serializer: LocationSerializer
