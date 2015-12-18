@@ -1,64 +1,15 @@
+# RideShare Api 
 
-# User authentication
+![screenshot](./images/screenshot.png)
 
-## Register
+##Links
+* [Deployed Front End](http://raq929.github.io/ride-share-front-end/)
+* [Deployed Back End](https://glacial-atoll-7078.herokuapp.com)
+* [Front End Repo](https://github.com/raq929/ride-share-front-end)
 
-```
-curl --include --request POST --header "Content-Type: application/json" -d '{
-  "credentials": {
-    "email": "an@example.email",
-    "password": "an example password",
-    "password_confirmation": "an example password"
-  }
-}' http://localhost:3000/register
-```
+##Installation
+This app uses a postgres database, so you will need PostgreSQL installed.
+Run a bundle install and you should be good to go! 
 
-## Login
-
-```
-curl --request POST --header "Content-Type: application/json" -d '{
-  "credentials": {
-    "email": "an@example.email",
-    "password": "an example password"
-  }
-}' http://localhost:3000/login
-```
-
-## Logout
-
-```
-curl --request DELETE --header "Authorization: Token token=c017d611187e3350baffc52d35a4df69" http://localhost:3000/logout/1
-```
-
-# Users
-
-## List
-
-```
-curl --header "Authorization: Token token=c017d611187e3350baffc52d35a4df69" http://localhost:3000/users
-```
-
-# Books
-
-## List
-
-```
-curl --header "Authorization: Token token=c017d611187e3350baffc52d35a4df69" http://localhost:3000/users
-```
-
-**OR**
-
-```
-curl http://localhost:3000/users
-```
-
-## Create
-
-```
-curl --request POST --header "Authorization: Token token=be249dc0231396806f24c953cafae03a" --header "Content-Type: application/json" -d '{
-  "book": {
-    "title":"The Hold",
-    "isbn":"abc123def456"
-  }
-}'  http://localhost:3000/books
-```
+##My Process
+I really enjoyed making my second Rails app! I learned a lot about relationships between tables doing this app, and I was really pleased that I got my serializers working so that I could get all of the information I needed on the front end from one get request. 
