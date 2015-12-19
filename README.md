@@ -5,7 +5,7 @@
 ##Links
 * [Deployed Front End](http://raq929.github.io/ride-share-front-end/)
 * [Deployed Back End](https://glacial-atoll-7078.herokuapp.com)
-* [Front End Repo](https://github.com/raq929/ride-share-front-end)
+* [Front End Repo/Complete README](https://github.com/raq929/ride-share-front-end)
 
 ##Installation
 This app uses a postgres database, so you will need PostgreSQL installed.
